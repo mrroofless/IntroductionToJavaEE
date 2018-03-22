@@ -1,0 +1,321 @@
+create database chips;
+
+use chips;
+
+create table chips(id_chip int not null primary key AUTO_INCREMENT, marking varchar(40), digit_capacity int, capacity int, date_of_output date, access_time int, popular varchar(10), cost int);
+
+create table produsers(id_prod int not null primary key AUTO_INCREMENT, title_produser varchar(40), home_country varchar(20), date_of_beginning date, number_of_staff int, annual_income int);
+
+create table customers(id_cust int not null primary key AUTO_INCREMENT, title_customer varchar(40), home_country varchar(20), date_of_beginning date, number_of_staff int, annual_income int);
+
+create table orders(order_id int not null primary key AUTO_INCREMENT, id_prod int, id_chip int, id_cust int, number_of_chips int, date_of_order date, execute varchar(10), foreign key (id_prod) references produsers(id_prod), foreign key (id_chip) references chips(id_chip), foreign key (id_cust) references customers(id_cust));
+
+insert into chips(marking, digit_capacity, capacity, date_of_output, access_time, popular, cost) values ('Goldstar KVR800D2N6/1G',128, 1024, 2008/02/02, 1, 'yes', 100);
+insert into chips(marking, digit_capacity, capacity, date_of_output, access_time, popular, cost) values ('Kingston SRH900D2N6',64, 512, 2008/02/02, 2, 'no', 50);
+insert into chips(marking, digit_capacity, capacity, date_of_output, access_time, popular, cost) values ('Samsung ERC9000BNV6F',256, 2024, 2008/02/02, 2, 'yes', 250);
+insert into chips(marking, digit_capacity, capacity, date_of_output, access_time, popular, cost) values ('Hitachi SF330GT6N(s)',512, 4096, 2008/02/02, 4, 'yes', 500);
+insert into chips(marking, digit_capacity, capacity, date_of_output, access_time, popular, cost) values ('Corsair XNS2 CM2X1024-6400C5',256, 2024, 2008/02/02, 5, 'yes', 300);
+insert into chips(marking, digit_capacity, capacity, date_of_output, access_time, popular, cost) values ('Toshiba RXG 5500-OVRBlackEdition',512, 4096, 2008/02/02, 6, 'no', 750);
+
+insert into produsers(title_produser, home_country, date_of_beginning, number_of_staff, annual_income) values ('Kingston', 'England', 2008/02/02, 5000, 10000000);
+insert into produsers(title_produser, home_country, date_of_beginning, number_of_staff, annual_income) values ('Samsung', 'Japan', 2008/02/02, 500000, 100000000);
+insert into produsers(title_produser, home_country, date_of_beginning, number_of_staff, annual_income) values ('Corsair', 'Korea', 2008/02/02, 5500, 20000000);
+insert into produsers(title_produser, home_country, date_of_beginning, number_of_staff, annual_income) values ('Hitachi', 'Taiwan', 2008/02/02, 10000, 50000000);
+insert into produsers(title_produser, home_country, date_of_beginning, number_of_staff, annual_income) values ('Goldstar', 'USA', 2008/02/02, 15000, 25000000);
+insert into produsers(title_produser, home_country, date_of_beginning, number_of_staff, annual_income) values ('Toshiba', 'China', 2008/02/02, 20000, 550000000);
+
+insert into customers(title_customer, home_country, date_of_beginning, number_of_staff, annual_income) values ('One', 'Russia', 2008/02/02, 200, 100000);
+insert into customers(title_customer, home_country, date_of_beginning, number_of_staff, annual_income) values ('Two', 'France', 2008/02/02, 300, 10000000);
+insert into customers(title_customer, home_country, date_of_beginning, number_of_staff, annual_income) values ('Three', 'England', 2008/02/02, 250, 200000);
+insert into customers(title_customer, home_country, date_of_beginning, number_of_staff, annual_income) values ('Four', 'USA', 2008/02/02, 400, 300000);
+insert into customers(title_customer, home_country, date_of_beginning, number_of_staff, annual_income) values ('Five', 'Spain', 2008/02/02, 500, 400000);
+insert into customers(title_customer, home_country, date_of_beginning, number_of_staff, annual_income) values ('Six', 'Russia', 2008/02/02, 600, 500000);
+
+insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (1, 1, 1, 100, 2008/02/02, 'yes');
+insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (2, 2, 2, 250, 2008/02/02, 'no');
+insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (3, 3, 3, 150, 2008/02/02, 'yes');
+insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (4, 4, 4, 1000, 2008/02/02, 'no');
+insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (5, 5, 5, 1200, 2008/02/02, 'yes');
+insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (6, 6, 6, 800, 2008/02/02, 'no');
+
+
+
+
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package sbd_lab1;
+
+/*
+  * Тестовый пример работы через драйвер JDBC с СУБД MySQL
+  * База данных chips
+  * Программа соединяется с базой, выодит количество колонок таблицы chips
+  * Выводим содержимое таблицы
+  *
+  * 2010 год.
+  * IDE - Eclipse
+  */
+ import java.sql.*;
+
+ public class TestConnect
+ {
+  static Connection connection;
+
+  public static void main (String[ ] args)
+  {
+  // TODO Работаем с драйвером
+  String drv = "com.mysql.jdbc.Driver";
+  String url = "jdbc:mysql://localhost:3306/chips";
+  String login = "root";
+  String pass = "root";
+  try
+  {
+  Class.forName(drv);//загрузка драйвера
+
+  connection = DriverManager.getConnection(url, login, pass);
+  System.out.println("Есть соединение с БД!");
+
+  System.out.println("SELECT * FROM chips");
+  Statement stmt = connection.createStatement();
+  ResultSet result = stmt.executeQuery("SELECT * FROM chips");
+  ResultSetMetaData md = result.getMetaData();
+  int cnt = md.getColumnCount(); // получаем число колонок
+  int row = 0;
+  while (result.next())
+  {
+  row++;
+  System.out.println("Row " + row); // номер строки
+  for (int i = 1; i <= cnt; i++)
+  {
+  String name = md.getColumnName(i); // имя поля
+  String val = result.getString(i); // значение
+  System.out.println(name + "=" + val); // имя и значение
+  }
+  }
+  System.out.println("");
+  System.out.println("");
+ System.out.println("Вставка");
+
+  stmt.executeUpdate("create table orders(order_id int not null primary key AUTO_INCREMENT, id_prod int, id_chip int, id_cust int, number_of_chips int, date_of_order date, execute varchar(10), foreign key (id_prod) references produsers(id_prod), foreign key (id_chip) references chips(id_chip), foreign key (id_cust) references customers(id_cust));");
+  stmt.executeUpdate("insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (1, 1, 1, 100, 2008/02/02, 'yes');;");
+  stmt.executeUpdate("insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (2, 2, 2, 250, 2008/02/02, 'no');");
+  stmt.executeUpdate("insert into orders(id_prod, id_chip, id_cust, number_of_chips, date_of_order, execute) values (3, 3, 3, 150, 2008/02/02, 'yes');");
+
+ResultSet results = (ResultSet)stmt.executeQuery("select * from orders");
+
+  ResultSetMetaData md1 = results.getMetaData();
+  int cnt1 = md1.getColumnCount(); // получаем число колонок
+  int row1 = 0;
+  while (results.next())
+  {
+  row1++;
+  System.out.println("Row " + row1); // номер строки
+  for (int i = 1; i <= cnt1; i++)
+  {
+  String name1 = md1.getColumnName(i); // имя поля
+  String val1 = results.getString(i); // значение
+  System.out.println(name1 + "=" + val1); // имя и значение
+  }
+  }
+
+  result.close();
+  results.close();
+  stmt.close();
+  connection.close();
+  }
+  catch (ClassNotFoundException ex)
+  {
+  System.err.println("Нет драйвера.");
+  System.err.println(ex);
+  }
+  catch (SQLException ex)
+  {
+  System.err.println("Нет соединения.");
+  System.err.println(ex);
+  }
+  
+  }
+
+ }
+
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import java.util.Date;
+/**
+ *
+ * @author stu-ist109
+ */
+@ManagedBean
+@RequestScoped
+public class ManagedBeanRequest {
+    private String marking;
+    private int capacity;
+    private Date date_of_output;
+    private int price;
+    private int number;
+    private int result;
+    
+    private ManagedBeanSession mbs;
+
+    /** Creates a new instance of ManagedBeanRequest */
+    public ManagedBeanRequest() {
+    }
+
+    /**
+     * @return the marking
+     */
+    public String getMarking() {
+        return marking;
+    }
+
+    /**
+     * @param marking the marking to set
+     */
+    public void setMarking(String marking) {
+        this.marking = marking;
+    }
+
+    /**
+     * @return the capacity
+     */
+    public int getCapacity() {
+        return capacity;
+    }
+
+    /**
+     * @param capacity the capacity to set
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    /**
+     * @return the date_of_output
+     */
+    public Date getDate_of_output() {
+        return date_of_output;
+    }
+
+    /**
+     * @param date_of_output the date_of_output to set
+     */
+    public void setDate_of_output(Date date_of_output) {
+        this.date_of_output = date_of_output;
+    }
+
+    /**
+     * @return the price
+     */
+    public int getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    /**
+     * @return the number
+     */
+    public int getNumber() {
+        return number;
+    }
+
+    /**
+     * @param number the number to set
+     */
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    /**
+     * @return the mbs
+     */
+    public ManagedBeanSession getMbs() {
+        return mbs;
+    }
+
+    /**
+     * @param mbs the mbs to set
+     */
+    public void setMbs(ManagedBeanSession mbs) {
+        this.mbs = mbs;
+    }
+
+        public String Count(){
+        int i = getMbs().getCounter();
+        getMbs().setCounter(i+1);
+        setResult(price * number);
+        return "r";
+    }
+
+    /**
+     * @return the result
+     */
+    public int getResult() {
+        return result;
+    }
+
+    /**
+     * @param result the result to set
+     */
+    public void setResult(int result) {
+        this.result = result;
+    }
+}
+
+
+
+
+
+
+
+
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+/**
+ *
+ * @author stu-ist109
+ */
+@ManagedBean
+@SessionScoped
+public class ManagedBeanSession {
+private int counter;
+    /** Creates a new instance of ManagedBeanSession */
+    public ManagedBeanSession() {
+    }
+
+    /**
+     * @return the counter
+     */
+    public int getCounter() {
+        return counter;
+    }
+
+    /**
+     * @param counter the counter to set
+     */
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+}
