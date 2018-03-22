@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">>
+    
+    <body>
+        
+        <ui:composition template="./Template.xhtml">
+            
+            <ui:define name="top">
+                <h3>Оформление бланка ремонта ...</h3>
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form> <center>
+                        <a href="Start.xhtml">Главная страница</a><br />
+                        <a href="Trouble.xhtml">Оформить заявку</a><br />
+                   
+                         </center>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <br />
+            <h:form>
+            Сложность ремонта:<br />
+            <h:inputText value="#{ClientBean.repair.difficulty}"></h:inputText><br />
+            Дополнительные компоненты:<br />
+            <h:inputText size="100" value="#{ClientBean.repair.components}"></h:inputText><br />
+            Цена ремонта:<br />
+            <h:inputText value="#{ClientBean.repair.price}"></h:inputText><br />
+            Оплачено?:
+            <h:selectBooleanCheckbox value="#{ClientBean.repair.cashed}"></h:selectBooleanCheckbox><br />
+            Завершено?:
+            <h:selectBooleanCheckbox value="#{ClientBean.repair.complete}"></h:selectBooleanCheckbox><br />
+            Ремонтопригодно?:
+            <h:selectBooleanCheckbox value="#{ClientBean.repair.executable}"></h:selectBooleanCheckbox><br />
+            <h:commandButton action="#{ClientBean.addRepair}" value="Ok"></h:commandButton>
+            </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <center>© 2012 Larin A.A. company. All Rights Reserved</center>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>
+

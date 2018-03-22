@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <body>
+
+        <ui:composition template="./Template.xhtml">
+
+            <ui:define name="top">
+               <center><h3>Список заявок</h3></center>
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form> <center>
+                        <a href="Start.xhtml">Главная страница</a><br />
+                        <a href="Trouble.xhtml">Оформить заявку</a><br />
+                         </center>
+                    </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+        <p><center>
+            <p:dataTable var="troubles" value="#{ClientBean.trList}">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Название поломки" />
+                                </f:facet>
+                                <h:outputText value="#{troubles.trouble_name}"  />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Описание" />
+                                </f:facet>
+                                <h:outputText value="#{troubles.description}"  />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Дата приёма" />
+                                </f:facet>
+                                <h:outputText value="#{troubles.data_priema}"  />
+                            </p:column>
+                        </p:dataTable><br /><br /></center>
+
+
+        </p>
+            </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                 <center><h3>© 2012 Larin A.A. All Rights Reserved</h3></center>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

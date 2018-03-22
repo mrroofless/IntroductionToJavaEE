@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <body>
+
+        <ui:composition template="./Template.xhtml">
+
+            <ui:define name="top">
+               <center><h3>Список клиентов</h3></center>
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form> <center>
+                        <a href="Start.xhtml">Главная страница</a><br />
+                        <a href="Trouble.xhtml">Оформить заявку</a><br />
+                         </center>
+                    </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+        <p><center>
+            <p:dataTable var="clients" value="#{ClientBean.clList}">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="ФИО клиента" />
+                                </f:facet>
+                                <h:outputText value="#{clients.fio}"  />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Адрес" />
+                                </f:facet>
+                                <h:outputText value="#{clients.address}"  />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Номер телефона" />
+                                </f:facet>
+                                <h:outputText value="#{clients.telephone}"  />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Email" />
+                                </f:facet>
+                                <h:outputText value="#{clients.email}"  />
+                            </p:column>
+                        </p:dataTable><br /><br /></center>
+
+
+        </p>
+            </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                 <center><h3>© 2012 Larin A.A. All Rights Reserved</h3></center>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
